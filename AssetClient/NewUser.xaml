@@ -1,0 +1,50 @@
+﻿<Window x:Class="AssetClient.NewUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AssetClient"
+        mc:Ignorable="d"
+        Title="NewUser" Height="600" Width="450" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="top" Margin="50,50,50,50" >
+
+            <TextBlock   Margin="10,20,0,0"  Style="{StaticResource SM_TexBlock}" Text="Name"  VerticalAlignment="Bottom" />
+            <TextBox x:Name="Inp_Name" Style="{StaticResource SM_TextBox}"  Margin="10,0,5,0" VerticalAlignment="Bottom"    />
+
+            <TextBlock   Margin="10,20,0,0"  Style="{StaticResource SM_TexBlock}" Text="Email"  VerticalAlignment="Bottom" />
+            <TextBox x:Name="Inp_Email" Style="{StaticResource SM_TextBox}"  Margin="10,0,5,0" VerticalAlignment="Bottom"    />
+
+            <TextBlock   Margin="10,20,0,0"  Style="{StaticResource SM_TexBlock}" Text="Phone"  VerticalAlignment="Bottom" />
+            <TextBox x:Name="Inp_Phone" Style="{StaticResource SM_TextBox}"  Margin="10,0,5,0" VerticalAlignment="Bottom"    />
+
+            <TextBlock   Margin="10,20,0,0"  Style="{StaticResource SM_TexBlock}" Text="Location"  VerticalAlignment="Bottom" />
+            <TextBox x:Name="Inp_Location" Style="{StaticResource SM_TextBox}"  Margin="10,0,5,0" VerticalAlignment="Bottom"    />
+
+
+
+
+
+
+
+
+
+        </StackPanel>
+
+        <Button x:Name="btn_saveAsset" Content="Save" Style="{DynamicResource SM_Button_Menu}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"  MinWidth="120" Click="btn_saveAsset_Click"  />
+        <Button x:Name="btn_cancel" Content="Cancel" Style="{DynamicResource SM_Button_Menu}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"  MinWidth="120" Click="btn_cancel_Click"   />
+
+    </Grid>
+</Window>

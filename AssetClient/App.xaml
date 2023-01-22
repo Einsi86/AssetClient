@@ -1,0 +1,494 @@
+﻿<Application x:Class="AssetClient.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AssetClient"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <SolidColorBrush x:Key="SMC_Boarder" Color="#3387BC"/>
+
+
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+
+                        <Grid>
+                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="5" CornerRadius="5,5,5,5"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="15,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="15,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center"
+                               Visibility="Collapsed" Foreground="#CCCCCC" FontFamily="Arial"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SM_Button_Menu" TargetType="Button">
+            <Setter Property="Background" Value="#3387BC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Focusable" Value="true"/>
+            <Setter Property="Margin" Value="20,5,20,5"/>
+            <Setter Property="MaxHeight" Value="60"/>
+            <Setter Property="MinHeight" Value="30"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Black" BorderThickness="0" 
+                            CornerRadius="5,5,5,5" x:Name="bd">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FF5F5F5F" Opacity="0.5"/>
+                            </Border.Effect>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              RecognizesAccessKey="True" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#FF609ABF"/>
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#FFB3E2FF"/>
+                                <Setter Property="Foreground" Value="black" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+
+                            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                                <Setter Property="Foreground" Value="black" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <Style x:Key="SM_StackPanel" TargetType="StackPanel">
+            <Setter Property="Background" Value="#444444"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+        </Style>
+
+        <Style x:Key="SM_TextBox" TargetType="TextBox">
+
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="AcceptsReturn" Value="False" />
+
+        </Style>
+
+        <Style x:Key="SM_PasswordBox" TargetType="PasswordBox">
+
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+
+
+        </Style>
+
+        <Style x:Key="SM_TexBlock" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+
+
+
+
+
+
+        </Style>
+
+        <Style x:Key="SM_TexBlock_Header" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="35"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+
+
+        </Style>
+
+        <Style x:Key="SM_Combobox" TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="Padding" Value="10,10,0,0"/>
+
+
+
+        </Style>
+
+        <Style x:Key="SM_Header" TargetType="Control">
+
+
+            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="Foreground" Value="White"/>
+
+
+        </Style>
+
+
+        <Style x:Key="sm_HeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#3387BC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Padding" Value="5,0,0,0" />
+            <Setter Property="BorderBrush" Value="DarkBlue" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF609ABF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="RowHeaderStyle1" TargetType="DataGridRowHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="FontSize" Value="18" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to sort."/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SM_DataGrid" TargetType="DataGrid">
+
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="BorderBrush" Value="#FF979797"/>
+            <Setter Property="Background" Value="#FFD8D8D8"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#FF6C6C6C"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#FF9C5252"/>
+            <Setter Property="AlternatingRowBackground" Value="PowderBlue"/>
+            <Setter Property="AlternationCount" Value="1"/>
+            <Setter Property="IsHitTestVisible" Value="True"/>
+            <Setter Property="IsTextSearchEnabled" Value="True"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="ColumnWidth" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Margin" Value="20,20,20,0"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="ClipboardCopyMode" Value="IncludeHeader"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle1}" />
+
+
+        </Style>
+
+        <Style x:Key="SM_ListViewStyle" TargetType="{x:Type ListView}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ListBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#FF042271"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListView}">
+                        <DataGrid x:Name="Datagrid1" HorizontalAlignment="Left" Height="247" VerticalAlignment="Top" Width="246" Margin="-63,-50,-83,-97"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false"/>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsGrouping" Value="true"/>
+                                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SM_ToggleButton" TargetType="{x:Type ToggleButton}" >
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="5"/>
+            <Setter Property="Padding" Value="10,10,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="border"  CornerRadius="5,5,5,5" Background="#FFBFACAC" BorderBrush="#777777" BorderThickness="1,1,1,1" >
+                            <ContentPresenter x:Name="contentPresenter"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#AA6666"/>
+                                <Setter Property="Margin" Value="10,10,0,0"/>
+
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="#66AA66" />
+                                <Setter Property="Margin" Value="10,10,0,0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="SM_CheckBox" TargetType="{x:Type ToggleButton}" >
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="10"/>
+
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+
+
+
+
+        <Style x:Key="SM_CheckBox2" TargetType="CheckBox">
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Margin" Value="9"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+        <Style x:Key="SM_Checkbox3" TargetType="{x:Type CheckBox}">
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="10,2"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <BulletDecorator Background="Transparent">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="Border" 
+                                        Width="32" 
+                                        Height="32" 
+                                        CornerRadius="2" 
+                                        Background="white"
+                                        BorderThickness="4"
+                                        BorderBrush="LightGray">
+                                    <Path 
+                                            Width="30" Height="30" 
+                                            x:Name="CheckMark"
+                                            SnapsToDevicePixels="False" 
+                                            Stroke="black"
+                                            StrokeThickness="5" 
+                                            Data="M 3 10 L 12 20 M 10 20 L 20 3 " />
+                                </Border>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter Margin="10,0,0,0"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left"
+                                  RecognizesAccessKey="True"/>
+                        </BulletDecorator>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}">
+                                <Setter TargetName="CheckMark" Property="Data" Value="M 0 0 L 7 7 M 0 7 L 7 0" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="white" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#0DB2F2" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#3387BC" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="Border" Property="Background" Value="White" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="Lightgray" />
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+
+        <Style x:Key="SM_CheckBox4" TargetType="{x:Type CheckBox}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF707070"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="checkBoxBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Grid x:Name="markGrid">
+                                    <Path x:Name="optionMark" Data="F1M9.97498,1.22334L4.6983,9.09834 4.52164,9.09834 0,5.19331 1.27664,3.52165 4.255,6.08833 8.33331,1.52588E-05 9.97498,1.22334z" Fill="#FF212121" Margin="1" Opacity="0" Stretch="None"/>
+                                    <Rectangle x:Name="indeterminateMark" Fill="#FF212121" Margin="2" Opacity="0"/>
+                                </Grid>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasContent" Value="True">
+                                <Setter Property="FocusVisualStyle">
+                                    <Setter.Value>
+                                        <Style>
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="4,-1,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="checkBoxBorder" Value="#FFF3F9FF"/>
+                                <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="#FF5593FF"/>
+                                <Setter Property="Fill" TargetName="optionMark" Value="#FF212121"/>
+                                <Setter Property="Fill" TargetName="indeterminateMark" Value="#FF212121"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="checkBoxBorder" Value="#FFE6E6E6"/>
+                                <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="#FFBCBCBC"/>
+                                <Setter Property="Fill" TargetName="optionMark" Value="#FF707070"/>
+                                <Setter Property="Fill" TargetName="indeterminateMark" Value="#FF707070"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="checkBoxBorder" Value="#FFD9ECFF"/>
+                                <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="#FF3C77DD"/>
+                                <Setter Property="Fill" TargetName="optionMark" Value="#FF212121"/>
+                                <Setter Property="Fill" TargetName="indeterminateMark" Value="#FF212121"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                                <Setter Property="Opacity" TargetName="indeterminateMark" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}">
+                                <Setter Property="Opacity" TargetName="optionMark" Value="0"/>
+                                <Setter Property="Opacity" TargetName="indeterminateMark" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </Application.Resources>
+</Application>
